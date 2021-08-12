@@ -17,30 +17,35 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
-// import ToDoTasks from "../components/toDoTasks";
 import RenderTasks from "../components/renderTasks";
 import DoneTasks from "../components/doneTasks";
-import AddTask from "../helpers/addTask";
+// import AddTask from "../helpers/addTask";
 import { IoAddCircle } from "react-icons/io5";
+// import TimeField from "react-simple-timefield";
+// import TimePicker from "react-time-picker";
+import TimePicker from "rc-time-picker";
+// import ReactDOM from "react-dom";
+import "rc-time-picker/assets/index.css";
+import TimeField from "react-simple-timefield";
 
 const IndexPage = () => {
   const [tasksArray, setTasksArray] = useState([]);
-  const [LOGCONSOLE, setLOGCONSOLE] = useState(false);
 
-  // FIXME:
   function AddTask({ arr }) {
     const task = useRef();
     const timeNeeded = useRef();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    // console.log("hi");
+    const [value, onChange] = useState("10:00");
+
     return (
       <>
         <Button
           height="60px"
           width="45%"
-          border="2px"
+          border="1px"
           bg="gray.300"
-          borderColor="green.500"
+          mt={1}
+          borderColor="gray.500"
           fontSize="300%"
           _hover={{ bg: "gray.400" }}
           onClick={onOpen}
@@ -58,13 +63,27 @@ const IndexPage = () => {
             <ModalHeader>Modal Title</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <FormControl>
+              <FormControl mb={2}>
                 <FormLabel>Task</FormLabel>
-                <Input type="email" ref={task} />
+                <Input size="lg" type="text" ref={task} />
               </FormControl>
               <FormControl>
                 <FormLabel>Time needed</FormLabel>
-                <Input type="number" ref={timeNeeded} />
+                {/* <Input /> */}
+                <Box>
+                  <TimeField
+                    // value={timeNeeded.current?.value}
+                    value={
+                      // @ts-expect-error
+                      timeNeeded.current?.value
+                        ? // @ts-expect-error
+                          timeNeeded.current?.value
+                        : "01:30"
+                    }
+                    input={<Input size="lg" w="50%" ref={timeNeeded} />}
+                    colon=":"
+                  />
+                </Box>
               </FormControl>
             </ModalBody>
 
@@ -72,16 +91,16 @@ const IndexPage = () => {
               <Button
                 colorScheme="blue"
                 onClick={() => {
-                  tasksArray.push({
+                  const copy = [...arr];
+                  // console.log("original", arr);
+                  copy.push({
                     // @ts-expect-error
                     task: task.current.value,
                     // @ts-expect-error
                     timeNeeded: timeNeeded.current.value,
                   });
                   onClose();
-                  setTasksArray(tasksArray);
-                  // console.log(arr);
-                  console.log("TASKS ARRAY", tasksArray);
+                  setTasksArray([...copy]);
                 }}
               >
                 Add!
@@ -92,8 +111,7 @@ const IndexPage = () => {
       </>
     );
   }
-  // ADDTASKS HERE
-  // FIXME:
+  // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
 
   return (
     <>
@@ -107,15 +125,13 @@ const IndexPage = () => {
           </Flex>
         </Box>
       </Box>
+
       <Flex w="100vw" justifyContent="space-between" m="0 auto">
         <Box h="100vh" w="100%">
           <Heading textAlign="center">Todo</Heading>
-          <Flex flexDir="column" alignItems="center" m="0 auto" bg="red">
-            {/* FIXME: */}
-            {LOGCONSOLE && <AddTask arr={tasksArray} />}
-            {/* FIXME: */}
-            <Button onClick={() => setLOGCONSOLE(true)}>hi</Button>
-            {/* <RenderTasks array={tasksArray} /> */}
+          <Flex flexDir="column" alignItems="center" m="0 auto">
+            <RenderTasks arr={tasksArray} />
+            <AddTask arr={tasksArray} />
           </Flex>
         </Box>
         <DoneTasks />
