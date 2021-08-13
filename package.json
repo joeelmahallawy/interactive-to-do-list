@@ -20,6 +20,7 @@
     "react-simple-timefield": "^3.2.3",
     "react-time-input": "^1.0.1",
     "react-time-picker": "^4.3.0",
+    "react-use": "^17.2.4",
     "validate": "^5.1.0"
   },
   "devDependencies": {
