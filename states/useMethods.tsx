@@ -11,9 +11,15 @@ export default function createMethods(state) {
       state.todo.push(el);
       return state;
     },
-    addInProgress(el) {
+    addNext(el) {
+      if (state.inProgress.length == 0) {
+        state.todo.splice(state.todo.indexOf(el), 1);
+        state.inProgress.push(el);
+      }
+      return state;
+    },
+    removeTask(el) {
       state.todo.splice(state.todo.indexOf(el), 1);
-      state.inProgress.push(el);
       return state;
     },
   };
