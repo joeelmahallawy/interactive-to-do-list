@@ -40,10 +40,9 @@ export default function TasksContainer() {
           </Center>
         </Flex>
         <Flex alignItems="center">
-          {/* FIXME: */}
           <RenderUpNext arr={state.inProgress} />
           <Button ml="auto" colorScheme="linkedin">
-            {/* FIXME: */}
+            {/* FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:START TIMER BY USING API FUNCTIONS start() **READ REACT-COUNTDOWN-DOCS** */}
             Start
           </Button>
         </Flex>
@@ -55,8 +54,6 @@ export default function TasksContainer() {
             placeholder="Ex) Do emails for 5 mins"
             size="lg"
             w="40%"
-            // w={getWidthOfTime}
-            // FIXME:FIXME:FIXME:
             ref={task}
           />
           <TimeField
@@ -73,7 +70,7 @@ export default function TasksContainer() {
                 // @ts-expect-error
                 getUsersTasks(task.current.value, time.current.value)
               );
-              console.log(state.todo);
+
               updateSelf();
             }}
           >

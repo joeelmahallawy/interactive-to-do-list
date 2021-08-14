@@ -22,5 +22,11 @@ export default function createMethods(state) {
       state.todo.splice(state.todo.indexOf(el), 1);
       return state;
     },
+    getTotalSum() {
+      return (
+        Number(state.inProgress[0].time.slice(0, 2)) +
+        state.todo.reduce((acc, val) => acc + Number(val.time.slice(0, 2)))
+      );
+    },
   };
 }
