@@ -5,7 +5,7 @@ import TaskContainer from "../components/TasksContainer";
 const IndexPage = () => {
   return (
     <>
-      <Box m="0 auto" w="90vw" p={5}>
+      <Box m="0 auto" w="80vw" p={5}>
         <TaskContainer />
       </Box>
     </>

@@ -5,10 +5,9 @@ import { useMethods, useUpdate } from "react-use";
 import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 
-export default function RenderToDo({ arr }) {
+export default function RenderToDo({ arr, reRenderParent }) {
   const [state, methods] = useMethods(createMethods, initState);
   const update = useUpdate();
-  //   console.log();
 
   return arr
     ? arr.map((task, i) => {
@@ -22,12 +21,13 @@ export default function RenderToDo({ arr }) {
               mt={3}
               mb={3}
               justifyContent="space-between"
-              p={3}
+              p={5}
               _hover={{ cursor: "pointer" }}
               onClick={() => {
                 methods.addNext(task);
+                reRenderParent();
+                // console.log(state);
                 update();
-                console.log(state);
               }}
             >
               <Text fontWeight="400" fontSize="lg">

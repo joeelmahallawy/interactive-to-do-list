@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Input } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { useMethods, useUpdate } from "react-use";
 import createMethods, { initState } from "../states/useMethods";
@@ -10,11 +10,17 @@ export default function TasksContainer() {
   const task = useRef();
   const updateSelf = useUpdate();
 
+  const [showNextUp, setshowNextUp] = useState(false);
+  function renderParent() {
+    setshowNextUp(true);
+    console.log("yi");
+  }
+
   return (
     <>
-      <Box borderBottom="1px solid gray" p={5} bg="green">
-        <Flex>
-          <Heading fontSize="200%">Next up:</Heading>
+      <Box borderBottom="1px solid gray" p={5} bg="lightgray">
+        <Flex alignItems="center">
+          <Heading fontSize="175%">Next up:</Heading>
           <RenderUpNext arr={state.inProgress} />
         </Flex>
       </Box>
@@ -22,7 +28,7 @@ export default function TasksContainer() {
         <Flex>
           <Input
             variant="filled"
-            placeholder="Filled"
+            placeholder="Ex) Do emails for 5 mins"
             size="lg"
             w="50%"
             ref={task}
@@ -39,13 +45,12 @@ export default function TasksContainer() {
           >
             Add
           </Button>
-          {/* <Button onClick={() => {}}>hi</Button> */}
         </Flex>
         <Box mt={5}>
-          <Heading p={3} border="0.5px solid lightgray">
+          <Heading p={4} border="0.5px solid lightgray">
             To do List
           </Heading>
-          <RenderToDo arr={state.todo} />
+          <RenderToDo arr={state.todo} reRenderParent={renderParent} />
         </Box>
       </Box>
     </>
