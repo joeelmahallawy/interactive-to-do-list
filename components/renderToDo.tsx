@@ -6,6 +6,7 @@ import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 
 export default function RenderToDo({ arr, reRenderParent }) {
+  console.log(arr);
   const [state, methods] = useMethods(createMethods, initState);
   const update = useUpdate();
 
@@ -31,9 +32,9 @@ export default function RenderToDo({ arr, reRenderParent }) {
               }}
             >
               <Text fontWeight="400" fontSize="lg">
-                {task}
+                {task.task}
               </Text>
-              <Box>TIME HERE</Box>
+              <Box>{task.time}</Box>
             </Flex>
             <Button
               bg="none"
