@@ -4,6 +4,7 @@ import Countdown from "react-countdown";
 import { useMethods } from "react-use";
 
 import createMethods, { initState } from "../states/useMethods";
+import CountDownTimer from "./CountDownTimer";
 // FIXME:FXIME:FIXME:
 
 export default function RenderUpNext({ arr }) {
@@ -24,27 +25,34 @@ export default function RenderUpNext({ arr }) {
           border="1px solid black"
           borderRadius="10px"
           h="60px"
-          w={`${
-            ((hoursToSeconds + minutesToSeconds) /
-              (MAX_TIME.hours * 60 * 60 + MAX_TIME.minutes * 60)) *
-            100
-          }%`}
+          //   w={`${
+          //     ((hoursToSeconds + minutesToSeconds) /
+          //       (MAX_TIME.hours * 60 * 60 + MAX_TIME.minutes * 60)) *
+          //     100
+          //   }%`}
+          w="85%"
           maxW="87.5%"
           justifyContent="center"
           bg="green.300"
           p={3}
           _hover={{ cursor: "pointer" }}
         >
-          <Heading>
-            <Countdown
+          {/* <Heading> */}
+          {/* <Countdown
               autoStart={false}
               zeroPadTime={2}
               //   zeroPadDays={0}
+              //   renderer={ap}
 
               //   daysInHours={false}
+
               date={Date.now() + (minutesToSeconds + hoursToSeconds) * 1000}
-            />
-          </Heading>
+            /> */}
+          {/* </Heading> */}
+          <CountDownTimer
+            hoursInSeconds={hoursToSeconds}
+            minutesInSeconds={minutesToSeconds}
+          />
           {/* </Center> */}
         </Flex>
         <Center>

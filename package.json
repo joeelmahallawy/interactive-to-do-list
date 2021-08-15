@@ -17,6 +17,7 @@
     "rc-time-picker": "^3.7.3",
     "react": "^17.0.2",
     "react-countdown": "^2.3.2",
+    "react-countdown-hook": "^1.1.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-simple-timefield": "^3.2.3",

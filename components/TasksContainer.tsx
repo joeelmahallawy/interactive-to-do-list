@@ -42,7 +42,8 @@ export default function TasksContainer() {
         <Flex alignItems="center">
           <RenderUpNext arr={state.inProgress} />
           <Button ml="auto" colorScheme="linkedin">
-            {/* FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:START TIMER BY USING API FUNCTIONS start() **READ REACT-COUNTDOWN-DOCS** */}
+            {/* 
+            FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:START TIMER BY USING API FUNCTIONS start() **READ REACT-COUNTDOWN-DOCS** */}
             Start
           </Button>
         </Flex>
@@ -81,6 +82,7 @@ export default function TasksContainer() {
           <Heading p={4} border="0.5px solid lightgray">
             To do List
           </Heading>
+
           <RenderToDo arr={state.todo} reRenderParent={renderParent} />
         </Box>
       </Box>
