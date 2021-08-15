@@ -1,24 +1,28 @@
 import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import Countdown from "react-countdown";
+import useCountDown from "react-countdown-hook";
 import { useMethods } from "react-use";
+import getTimeFormat from "../helpers/getTimeFormat";
 
 import createMethods, { initState } from "../states/useMethods";
-import CountDownTimer from "./CountDownTimer";
-// FIXME:FXIME:FIXME:
+// import CountDownTimer from "./CountDownTimer";
 
-export default function RenderUpNext({ arr }) {
+export default function RenderUpNext({ arr, btnRef }) {
+  //   console.log(arr[0]);
   const [state, methods] = useMethods(createMethods, initState);
+  const minutesToSeconds = arr[0]?.time.slice(-2) * 60;
+  const hoursToSeconds = arr[0]?.time.slice(0, 2) * 60 * 60;
+  const [timeLeft, { start, pause, resume, reset }] = useCountDown(
+    hoursToSeconds + minutesToSeconds,
+    1000
+  );
 
+  console.log(btnRef.current.onclick);
+  btnRef.current.onclick = start();
+  console.log(minutesToSeconds);
+  console.log(hoursToSeconds);
   return arr.map((next, i) => {
-    const minutesToSeconds = next.time.slice(-2) * 60;
-    const hoursToSeconds = next.time.slice(0, 2) * 60 * 60;
-    const MAX_TIME = {
-      hours: 2,
-      minutes: 0,
-    };
-    const acc = 0;
-
     return (
       <Flex w="95%" key={i}>
         <Flex
@@ -37,23 +41,10 @@ export default function RenderUpNext({ arr }) {
           p={3}
           _hover={{ cursor: "pointer" }}
         >
-          {/* <Heading> */}
-          {/* <Countdown
-              autoStart={false}
-              zeroPadTime={2}
-              //   zeroPadDays={0}
-              //   renderer={ap}
-
-              //   daysInHours={false}
-
-              date={Date.now() + (minutesToSeconds + hoursToSeconds) * 1000}
-            /> */}
-          {/* </Heading> */}
-          <CountDownTimer
-            hoursInSeconds={hoursToSeconds}
-            minutesInSeconds={minutesToSeconds}
-          />
-          {/* </Center> */}
+          <Heading pos="absolute">
+            Time left:{" "}
+            {getTimeFormat(hoursToSeconds, minutesToSeconds, timeLeft)}
+          </Heading>
         </Flex>
         <Center>
           {/* <Text ml="auto">{console.log(state.inProgress)}</Text> */}

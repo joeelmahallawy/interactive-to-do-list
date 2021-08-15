@@ -22,6 +22,7 @@ export default function TasksContainer() {
   const task = useRef();
   const updateSelf = useUpdate();
   const time = useRef();
+  const startTimer = useRef();
 
   const [showNextUp, setshowNextUp] = useState(false);
   function renderParent() {
@@ -40,8 +41,9 @@ export default function TasksContainer() {
           </Center>
         </Flex>
         <Flex alignItems="center">
-          <RenderUpNext arr={state.inProgress} />
-          <Button ml="auto" colorScheme="linkedin">
+          <RenderUpNext arr={state.inProgress} btnRef={startTimer} />
+          {/* {console.log(startTimer.current)} */}
+          <Button ml="auto" colorScheme="linkedin" ref={startTimer}>
             {/* 
             FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:START TIMER BY USING API FUNCTIONS start() **READ REACT-COUNTDOWN-DOCS** */}
             Start
