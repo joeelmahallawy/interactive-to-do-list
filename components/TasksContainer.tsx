@@ -1,20 +1,9 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Input } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
-import useCountDown from "react-countdown-hook";
 import TimeField from "react-simple-timefield";
 import { useMethods, useUpdate } from "react-use";
 import getUsersTasks from "../helpers/getUsersTasks";
-
 import createMethods, { initState } from "../states/useMethods";
-
 import RenderToDo from "./RenderToDo";
 import RenderUpNext from "./UpNext";
 
@@ -23,38 +12,61 @@ export default function TasksContainer() {
   const task = useRef();
   const updateSelf = useUpdate();
   const time = useRef();
-  const startTimer = useRef();
-
-  const [showNextUp, setshowNextUp] = useState(false);
-  function renderParent() {
-    setshowNextUp(true);
-  }
-
+  const [showInProgress, setShowInProgress] = useState(false);
   return (
     <>
       <Box borderBottom="1px solid gray" p={2}>
         <Flex mb={2}>
           <Center>
-            <Heading fontSize="250%">Next up:</Heading>
-            <Heading fontSize="200%" fontWeight="400" fontFamily="sans-serif">
-              {state.inProgress.length == 1 ? state.inProgress[0].task : null}
+            {showInProgress ? (
+              <Heading fontSize="250%">In Progress:</Heading>
+            ) : (
+              <Heading fontSize="250%">Next up:</Heading>
+            )}
+            <Heading
+              mt="auto"
+              fontSize="225%"
+              fontWeight="300"
+              fontFamily="sans-serif"
+            >
+              {/* FIXME: */}
+              {/* {console.log(state.inProgress[0])} */}
+              {/*  */}
+
+              {state.inProgress[0] ? state.inProgress[0].task : ""}
+              {/* {console.log("LENGTH OF ARRAY:", state.inProgress.length)} */}
             </Heading>
           </Center>
         </Flex>
-        <RenderUpNext arr={state.inProgress} />
+
+        <RenderUpNext
+          arr={state.inProgress}
+          func={setShowInProgress}
+          update={updateSelf}
+        />
       </Box>
       <Box mt={5}>
         <Flex>
           <Input
-            variant="filled"
+            variant="outline"
             placeholder="Ex) Do emails for 5 mins"
             size="lg"
             w="40%"
             ref={task}
+            _focus={{ boxShadow: "md" }}
+            mr={1}
           />
           <TimeField
             value={"02:00"}
-            input={<Input variant="filled" size="lg" w="10%" ref={time} />}
+            input={
+              <Input
+                variant="outline"
+                _focus={{ boxShadow: "md" }}
+                size="lg"
+                w="10%"
+                ref={time}
+              />
+            }
             colon=":"
           />
           <Button
@@ -62,11 +74,16 @@ export default function TasksContainer() {
             colorScheme="linkedin"
             ml={3}
             onClick={() => {
-              methods.addToDo(
+              // @ts-expect-error
+              if (task.current.value != "") {
+                methods.addToDo(
+                  // @ts-expect-error
+                  getUsersTasks(task.current.value, time.current.value)
+                );
+                updateSelf();
                 // @ts-expect-error
-                getUsersTasks(task.current.value, time.current.value)
-              );
-              updateSelf();
+                task.current.value = "";
+              }
             }}
           >
             Add
@@ -76,8 +93,7 @@ export default function TasksContainer() {
           <Heading p={4} border="0.5px solid lightgray">
             To do List
           </Heading>
-
-          <RenderToDo arr={state.todo} reRenderParent={renderParent} />
+          <RenderToDo arr={state.todo} updateParent={updateSelf} />
         </Box>
       </Box>
     </>

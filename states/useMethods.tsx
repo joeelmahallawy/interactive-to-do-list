@@ -31,6 +31,7 @@ export default function createMethods(state) {
     removeFromNextUp(el) {
       state.inProgress.pop();
       state.todo.push(el);
+
       return state;
     },
   };

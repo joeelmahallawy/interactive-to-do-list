@@ -6,11 +6,11 @@ import useCountDown from "react-countdown-hook";
 import { useClickAway, useMethods, useUpdate } from "react-use";
 import getTimeFormat from "../helpers/getTimeFormat";
 import getTotalTime from "../helpers/getTotalTime";
-import zeroPaddingForTime from "../helpers/zeroPaddingForTime";
 import createMethods, { initState } from "../states/useMethods";
+import FinishedTaskConfirmation from "./FinishedTaskConfirmation";
 import startResumePauseBtn from "./startResumePauseBtn";
 
-export default function RenderUpNext({ arr }) {
+export default function RenderUpNext({ arr, func, update }) {
   const updateMe = useUpdate();
   const [showButton, setshowButton] = useState("Start");
   const [state, methods] = useMethods(createMethods, initState);
@@ -23,23 +23,35 @@ export default function RenderUpNext({ arr }) {
     1000
   );
   const seconds = timeLeft / 1000;
+
   //   FIXME:FIXME:FIXME: IF SECONDS ==1 ASK IF USER IS DONE
+  if (seconds == 55) {
+    pause();
+    return null;
+    // return <Button onClick={() => pause()}>PASUE</Button>;
+  }
 
   return arr.map((next, i) => {
     return (
       <Flex alignItems="center" key={i}>
-        <Box w="87.5%">
-          {/* hi */}
-          {/* <Center justifyContent="flex-end" fontSize="x-large">
-            Time left:
-            {getTimeFormat(
-              initialTime,
-              timeLeft / 1000 / 3600,
-              (timeLeft / 1000 / 60) % 60,
-              timeLeft
-            )}
-          </Center> */}
-          {/* FIXME:FIXME:TIMELEFT ABOVE THE DECREASING BLOCKFIXME:FIXME:FIXME: */}
+        <Box w="86%">
+          <Heading
+            fontSize="200%"
+            fontWeight="400"
+            justifyContent="right"
+            mb={1}
+          >
+            <Flex>
+              Time left:
+              {getTimeFormat(
+                initialTime,
+                timeLeft / 1000 / 3600,
+                (timeLeft / 1000 / 60) % 60,
+                timeLeft
+              )}
+            </Flex>
+          </Heading>
+
           <Flex
             border="1px solid gray"
             borderRadius="10px"
@@ -47,34 +59,23 @@ export default function RenderUpNext({ arr }) {
             w={`${
               timeLeft / initialTime ? (timeLeft / initialTime) * 100 : 100
             }%`}
-            justifyContent="center"
+            transition="width 0.25s"
             bg="green.300"
-            // onClick={() => {
-            //   pause();
-            //   methods.removeFromNextUp(next);
-            //   updateMe();
-            // }}
+            onClick={() => {
+              reset();
+              methods.removeFromNextUp(next);
+              setshowButton("Start");
+              func(false);
+              update();
+              console.log(update);
+            }}
             p={3}
             _hover={{ cursor: "pointer" }}
-          >
-            <Heading pos="absolute">
-              <Flex>
-                Time left:
-                {getTimeFormat(
-                  initialTime,
-                  timeLeft / 1000 / 3600,
-                  (timeLeft / 1000 / 60) % 60,
-                  timeLeft
-                )}
-              </Flex>
-            </Heading>
-          </Flex>
+          />
         </Box>
-        <Flex ml="auto" flexDir="column" mb={1}>
-          {/* FIXME:FIXME:FIXME:ADD TIME FROM ALL ARRAYSFIXME:FIXME:FIXME: */}
-
-          <Heading fontWeight="500" ml="auto" fontSize="110%">
-            {getTotalTime(state)}
+        <Flex ml="auto" flexDir="column" mt={3}>
+          <Heading fontWeight="500" ml="auto" fontSize="100%">
+            {getTotalTime(state, timeLeft)}
           </Heading>
           {showButton == "Start"
             ? startResumePauseBtn(
@@ -84,6 +85,7 @@ export default function RenderUpNext({ arr }) {
                 "Start",
                 "messenger",
                 setShowTotalTime,
+                func,
                 initialTime
               )
             : showButton == "Pause"

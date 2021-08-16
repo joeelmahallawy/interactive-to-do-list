@@ -8,6 +8,7 @@ export default function startResumePauseBtn(
   text,
   color,
   setShowTotal = null,
+  stateFunc = null,
   initVal = 0
 ) {
   return (
@@ -15,13 +16,13 @@ export default function startResumePauseBtn(
       w="75%"
       m="0 auto"
       mt={1.5}
-      p={5}
       colorScheme={color}
       _focus={{ outline: "none" }}
       onClick={() => {
         setterFunc(setTo);
         func(initVal);
         setShowTotal !== null && setShowTotal(false);
+        stateFunc !== null && stateFunc(true);
       }}
     >
       {text}
