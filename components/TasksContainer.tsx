@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
+import useCountDown from "react-countdown-hook";
 import TimeField from "react-simple-timefield";
 import { useMethods, useUpdate } from "react-use";
 import getUsersTasks from "../helpers/getUsersTasks";
@@ -40,15 +41,7 @@ export default function TasksContainer() {
             </Heading>
           </Center>
         </Flex>
-        <Flex alignItems="center">
-          <RenderUpNext arr={state.inProgress} btnRef={startTimer} />
-          {/* {console.log(startTimer.current)} */}
-          <Button ml="auto" colorScheme="linkedin" ref={startTimer}>
-            {/* 
-            FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:START TIMER BY USING API FUNCTIONS start() **READ REACT-COUNTDOWN-DOCS** */}
-            Start
-          </Button>
-        </Flex>
+        <RenderUpNext arr={state.inProgress} />
       </Box>
       <Box mt={5}>
         <Flex>
@@ -73,7 +66,6 @@ export default function TasksContainer() {
                 // @ts-expect-error
                 getUsersTasks(task.current.value, time.current.value)
               );
-
               updateSelf();
             }}
           >
