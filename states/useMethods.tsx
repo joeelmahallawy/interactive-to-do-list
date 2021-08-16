@@ -28,5 +28,10 @@ export default function createMethods(state) {
         state.todo.reduce((acc, val) => acc + Number(val.time.slice(0, 2)))
       );
     },
+    removeFromNextUp(el) {
+      state.inProgress.pop();
+      state.todo.push(el);
+      return state;
+    },
   };
 }

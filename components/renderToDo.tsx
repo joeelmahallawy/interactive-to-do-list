@@ -53,6 +53,4 @@ export default function RenderToDo({ arr, reRenderParent }) {
         );
       })
     : null;
-
-  //   return <Heading>YOOO</Heading>;
 }

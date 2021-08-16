@@ -53,7 +53,7 @@ export default function TasksContainer() {
             ref={task}
           />
           <TimeField
-            value={"04:00"}
+            value={"02:00"}
             input={<Input variant="filled" size="lg" w="10%" ref={time} />}
             colon=":"
           />

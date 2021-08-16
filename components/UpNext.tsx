@@ -5,13 +5,16 @@ import Countdown from "react-countdown";
 import useCountDown from "react-countdown-hook";
 import { useClickAway, useMethods, useUpdate } from "react-use";
 import getTimeFormat from "../helpers/getTimeFormat";
-
+import getTotalTime from "../helpers/getTotalTime";
+import zeroPaddingForTime from "../helpers/zeroPaddingForTime";
 import createMethods, { initState } from "../states/useMethods";
+import startResumePauseBtn from "./startResumePauseBtn";
 
 export default function RenderUpNext({ arr }) {
-  const [showStartButton, setShowStartButton] = useState(true);
   const updateMe = useUpdate();
+  const [showButton, setshowButton] = useState("Start");
   const [state, methods] = useMethods(createMethods, initState);
+  const [showTotalTime, setShowTotalTime] = useState(true);
   const minutesToSeconds = arr[0]?.time.slice(-2) * 60;
   const hoursToSeconds = arr[0]?.time.slice(0, 2) * 60 * 60;
   const initialTime = (hoursToSeconds + minutesToSeconds) * 1000;
@@ -19,28 +22,44 @@ export default function RenderUpNext({ arr }) {
     initialTime,
     1000
   );
-  console.log(timeLeft / initialTime);
+  const seconds = timeLeft / 1000;
+  //   FIXME:FIXME:FIXME: IF SECONDS ==1 ASK IF USER IS DONE
 
   return arr.map((next, i) => {
     return (
       <Flex alignItems="center" key={i}>
-        <Flex w="95%" onClick={() => start()}>
+        <Box w="87.5%">
+          {/* hi */}
+          {/* <Center justifyContent="flex-end" fontSize="x-large">
+            Time left:
+            {getTimeFormat(
+              initialTime,
+              timeLeft / 1000 / 3600,
+              (timeLeft / 1000 / 60) % 60,
+              timeLeft
+            )}
+          </Center> */}
+          {/* FIXME:FIXME:TIMELEFT ABOVE THE DECREASING BLOCKFIXME:FIXME:FIXME: */}
           <Flex
-            border="1px solid black"
+            border="1px solid gray"
             borderRadius="10px"
             h="60px"
-            w="85%"
-            // w={"100%"}
-            // w={`${timeLeft / initialTime}%`}
-            maxW="87.5%"
+            w={`${
+              timeLeft / initialTime ? (timeLeft / initialTime) * 100 : 100
+            }%`}
             justifyContent="center"
             bg="green.300"
+            // onClick={() => {
+            //   pause();
+            //   methods.removeFromNextUp(next);
+            //   updateMe();
+            // }}
             p={3}
             _hover={{ cursor: "pointer" }}
           >
             <Heading pos="absolute">
               <Flex>
-                Time left:{" "}
+                Time left:
                 {getTimeFormat(
                   initialTime,
                   timeLeft / 1000 / 3600,
@@ -50,40 +69,39 @@ export default function RenderUpNext({ arr }) {
               </Flex>
             </Heading>
           </Flex>
-          <Center>
-            {/* FIXME:FIXME:FIXME:ADD TOTAL TIME FROM ALL ARRAYSFIXME:FIXME:FIXME: */}
+        </Box>
+        <Flex ml="auto" flexDir="column" mb={1}>
+          {/* FIXME:FIXME:FIXME:ADD TIME FROM ALL ARRAYSFIXME:FIXME:FIXME: */}
 
-            <Text ml="auto" fontSize="110%">
-              Total:{state.inProgress[0].time.slice(0, 2)} hrs{" "}
-              {state.inProgress[0].time.slice(-2)} mins
-            </Text>
-          </Center>
+          <Heading fontWeight="500" ml="auto" fontSize="110%">
+            {getTotalTime(state)}
+          </Heading>
+          {showButton == "Start"
+            ? startResumePauseBtn(
+                "Pause",
+                setshowButton,
+                start,
+                "Start",
+                "messenger",
+                setShowTotalTime,
+                initialTime
+              )
+            : showButton == "Pause"
+            ? startResumePauseBtn(
+                "Resume",
+                setshowButton,
+                pause,
+                "Pause",
+                "red"
+              )
+            : startResumePauseBtn(
+                "Pause",
+                setshowButton,
+                resume,
+                "Resume",
+                "teal"
+              )}
         </Flex>
-
-        {showStartButton ? (
-          <Button
-            ml="auto"
-            colorScheme="linkedin"
-            onClick={() => {
-              setShowStartButton(false);
-              start();
-              //   updateMe();
-            }}
-          >
-            Start
-          </Button>
-        ) : (
-          <Button
-            ml="auto"
-            colorScheme="linkedin"
-            onClick={() => {
-              setShowStartButton(true);
-              pause();
-            }}
-          >
-            Pause
-          </Button>
-        )}
       </Flex>
     );
   });
