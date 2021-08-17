@@ -1,12 +1,13 @@
 import { Center, Flex, Box, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
-import { useMethods } from "react-use";
+import { useMethods, useUpdate } from "react-use";
 import createMethods, { initState } from "../states/useMethods";
 
 export default function RenderDone({ arr }) {
   const [state, methods] = useMethods(createMethods, initState);
-
+  const update = useUpdate();
+  console.log(arr);
   return arr
     ? arr.map((task, i) => {
         return (
@@ -16,6 +17,7 @@ export default function RenderDone({ arr }) {
               borderRadius="10px"
               w="100%"
               alignContent="center"
+              bg="gray.300"
               mt={3}
               mb={3}
               justifyContent="space-between"
@@ -32,11 +34,11 @@ export default function RenderDone({ arr }) {
               >
                 {task.task}
               </Text>
-              <Box>{`${
+              <Center fontSize="125%">{`${
                 Number(task.time.slice(0, 2)) < 10
                   ? task.time.slice(1, 2)
                   : task.time.slice(0, 2)
-              }hrs ${task.time.slice(-2)}mins`}</Box>
+              }hrs ${task.time.slice(-2)}mins`}</Center>
             </Flex>
             <Button
               bg="none"
@@ -44,9 +46,9 @@ export default function RenderDone({ arr }) {
               _focus={{ outline: "none" }}
               _active={{ bg: "none" }}
               onClick={() => {
-                methods.removeTask(task);
-                // updateParent();
-                // update();
+                methods.removeFinishedTask(task);
+                console.log(state);
+                update();
               }}
             >
               <IoIosCloseCircle color="red" size="50" />

@@ -35,13 +35,17 @@ export default function createMethods(state) {
       return state;
     },
     doNextTask() {
-      state.todo == []
-        ? state.done.push(state.inProgress.pop())
+      state.todo.length == 0
+        ? (() => {
+            let prevTask = state.inProgress.pop();
+            state.done.push(prevTask);
+          })()
         : (() => {
             let lastTask = state.inProgress.pop();
-            state.inProgress.push(state.todo.pop());
+            state.inProgress.push(state.todo.shift());
             state.done.push(lastTask);
           })();
+
       return state;
     },
     removeFinishedTask(el) {

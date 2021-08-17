@@ -3,6 +3,7 @@ import { useMethods } from "react-use";
 import createMethods, { initState } from "../states/useMethods";
 
 export default function getTotalTime(state, timeLeft) {
+  // console.log(state);
   timeLeft = timeLeft / 1000;
   const totalSecondsInProgressArray =
     Number(state.inProgress[0].time.slice(0, 2)) * 3600 +

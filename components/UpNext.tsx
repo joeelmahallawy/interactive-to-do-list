@@ -4,6 +4,7 @@ import { useState } from "react";
 import Countdown from "react-countdown";
 import useCountDown from "react-countdown-hook";
 import { useClickAway, useMethods, useUpdate } from "react-use";
+import colorTransitioner from "../helpers/colorTransitioner";
 import getTimeFormat from "../helpers/getTimeFormat";
 import getTotalTime from "../helpers/getTotalTime";
 import createMethods, { initState } from "../states/useMethods";
@@ -25,8 +26,9 @@ export default function RenderUpNext({ arr, func, update }) {
   );
   const seconds = timeLeft / 1000;
 
-  if (seconds == 55) {
+  if (seconds == 1) {
     reset();
+    setshowButton("Start");
     const moveToNextTask = window.confirm("Move on to next task?");
     if (moveToNextTask == true) {
       methods.doNextTask();
@@ -35,12 +37,11 @@ export default function RenderUpNext({ arr, func, update }) {
     }
     // moveToNextTask ? methods.doNextTask() : reset();
   }
-  console.log(state);
 
   return arr.map((next, i) => {
     return (
       <Flex alignItems="center" key={i}>
-        <Box w="90%">
+        <Box w="85%">
           <Heading
             fontSize="200%"
             fontWeight="400"
@@ -65,8 +66,8 @@ export default function RenderUpNext({ arr, func, update }) {
             w={`${
               timeLeft / initialTime ? (timeLeft / initialTime) * 100 : 100
             }%`}
-            transition="width 0.25s"
-            bg="green.300"
+            transition="width 0.25s, background-color 6s"
+            bg={colorTransitioner(timeLeft, initialTime)}
             onClick={() => {
               reset();
               methods.removeFromNextUp(next);

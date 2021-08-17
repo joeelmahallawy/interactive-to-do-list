@@ -4,6 +4,7 @@ import TimeField from "react-simple-timefield";
 import { useMethods, useUpdate } from "react-use";
 import getUsersTasks from "../helpers/getUsersTasks";
 import createMethods, { initState } from "../states/useMethods";
+import HelpModal from "./HelpModal";
 import RenderDone from "./RenderDone";
 import RenderToDo from "./RenderToDo";
 import RenderUpNext from "./UpNext";
@@ -14,15 +15,20 @@ export default function TasksContainer() {
   const updateSelf = useUpdate();
   const time = useRef();
   const [showInProgress, setShowInProgress] = useState(false);
+  // const [updateMoi, setUpdateMoi] = useState(false)
   return (
     <>
       <Box borderBottom="1px solid gray" p={2}>
         <Flex mb={2}>
           <Center>
             {showInProgress ? (
-              <Heading fontSize="250%">In Progress:</Heading>
+              <Heading color="teal.700" fontSize="250%">
+                In Progress:
+              </Heading>
             ) : (
-              <Heading fontSize="250%">Next up:</Heading>
+              <Heading color="teal.700" fontSize="250%">
+                Next up:
+              </Heading>
             )}
             <Heading
               mt="auto"
@@ -30,12 +36,7 @@ export default function TasksContainer() {
               fontWeight="300"
               fontFamily="sans-serif"
             >
-              {/* FIXME: */}
-              {/* {console.log(state.inProgress[0])} */}
-              {/*  */}
-
               {state.inProgress[0] ? state.inProgress[0].task : ""}
-              {/* {console.log("LENGTH OF ARRAY:", state.inProgress.length)} */}
             </Heading>
           </Center>
         </Flex>
@@ -77,7 +78,7 @@ export default function TasksContainer() {
             ml={3}
             onClick={() => {
               // @ts-expect-error
-              if (task.current.value != "") {
+              if (task.current.value != "" && time.current.value != "00:00") {
                 methods.addToDo(
                   // @ts-expect-error
                   getUsersTasks(task.current.value, time.current.value)
@@ -90,6 +91,7 @@ export default function TasksContainer() {
           >
             Add
           </Button>
+          <HelpModal />
         </Flex>
         <Box mt={5}>
           <Heading p={4} border="0.5px solid lightgray">

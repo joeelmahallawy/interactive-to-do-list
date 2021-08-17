@@ -38,14 +38,14 @@ export default function RenderToDo({ arr, updateParent }) {
                 update();
               }}
             >
-              <Text fontWeight="400" fontSize="lg">
+              <Text fontWeight="400" fontSize="150%">
                 {task.task}
               </Text>
-              <Box>{`${
+              <Center fontSize="125%">{`${
                 Number(task.time.slice(0, 2)) < 10
                   ? task.time.slice(1, 2)
                   : task.time.slice(0, 2)
-              }hrs ${task.time.slice(-2)}mins`}</Box>
+              }hrs ${task.time.slice(-2)}mins`}</Center>
             </Flex>
             <Button
               bg="none"
