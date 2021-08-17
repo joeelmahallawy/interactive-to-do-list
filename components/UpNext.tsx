@@ -8,7 +8,6 @@ import colorTransitioner from "../helpers/colorTransitioner";
 import getTimeFormat from "../helpers/getTimeFormat";
 import getTotalTime from "../helpers/getTotalTime";
 import createMethods, { initState } from "../states/useMethods";
-import FinishedTaskConfirmation from "./FinishedTaskConfirmation";
 import startResumePauseBtn from "./startResumePauseBtn";
 
 export default function RenderUpNext({ arr, func, update }) {

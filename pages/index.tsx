@@ -1,7 +1,5 @@
 import { Box, Center, Heading } from "@chakra-ui/react";
 import React from "react";
-import { useState } from "react";
-import FinishedTaskConfirmation from "../components/FinishedTaskConfirmation";
 import TaskContainer from "../components/TasksContainer";
 
 const IndexPage = () => {
