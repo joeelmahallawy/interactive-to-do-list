@@ -4,6 +4,7 @@ import TimeField from "react-simple-timefield";
 import { useMethods, useUpdate } from "react-use";
 import getUsersTasks from "../helpers/getUsersTasks";
 import createMethods, { initState } from "../states/useMethods";
+import RenderDone from "./RenderDone";
 import RenderToDo from "./RenderToDo";
 import RenderUpNext from "./UpNext";
 
@@ -45,11 +46,12 @@ export default function TasksContainer() {
           update={updateSelf}
         />
       </Box>
+
       <Box mt={5}>
         <Flex>
           <Input
             variant="outline"
-            placeholder="Ex) Do emails for 5 mins"
+            placeholder="Eg. Do my coding project"
             size="lg"
             w="40%"
             ref={task}
@@ -57,7 +59,7 @@ export default function TasksContainer() {
             mr={1}
           />
           <TimeField
-            value={"02:00"}
+            value={"00:45"}
             input={
               <Input
                 variant="outline"
@@ -94,6 +96,7 @@ export default function TasksContainer() {
             To do List
           </Heading>
           <RenderToDo arr={state.todo} updateParent={updateSelf} />
+          <RenderDone arr={state.done} />
         </Box>
       </Box>
     </>

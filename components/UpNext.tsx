@@ -12,6 +12,7 @@ import startResumePauseBtn from "./startResumePauseBtn";
 
 export default function RenderUpNext({ arr, func, update }) {
   const updateMe = useUpdate();
+  const [StopTime, setStopTime] = useState(false);
   const [showButton, setshowButton] = useState("Start");
   const [state, methods] = useMethods(createMethods, initState);
   const [showTotalTime, setShowTotalTime] = useState(true);
@@ -24,17 +25,22 @@ export default function RenderUpNext({ arr, func, update }) {
   );
   const seconds = timeLeft / 1000;
 
-  //   FIXME:FIXME:FIXME: IF SECONDS ==1 ASK IF USER IS DONE
   if (seconds == 55) {
-    pause();
-    return null;
-    // return <Button onClick={() => pause()}>PASUE</Button>;
+    reset();
+    const moveToNextTask = window.confirm("Move on to next task?");
+    if (moveToNextTask == true) {
+      methods.doNextTask();
+      update();
+      setshowButton("Start");
+    }
+    // moveToNextTask ? methods.doNextTask() : reset();
   }
+  console.log(state);
 
   return arr.map((next, i) => {
     return (
       <Flex alignItems="center" key={i}>
-        <Box w="86%">
+        <Box w="90%">
           <Heading
             fontSize="200%"
             fontWeight="400"
@@ -67,7 +73,6 @@ export default function RenderUpNext({ arr, func, update }) {
               setshowButton("Start");
               func(false);
               update();
-              console.log(update);
             }}
             p={3}
             _hover={{ cursor: "pointer" }}

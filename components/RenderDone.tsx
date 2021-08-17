@@ -1,21 +1,11 @@
-import {
-  Box,
-  Heading,
-  Text,
-  Flex,
-  Button,
-  Center,
-  transition,
-} from "@chakra-ui/react";
-
-import createMethods, { initState } from "../states/useMethods";
-import { useMethods, useUpdate } from "react-use";
+import { Center, Flex, Box, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useMethods } from "react-use";
+import createMethods, { initState } from "../states/useMethods";
 
-export default function RenderToDo({ arr, updateParent }) {
+export default function RenderDone({ arr }) {
   const [state, methods] = useMethods(createMethods, initState);
-  const update = useUpdate();
 
   return arr
     ? arr.map((task, i) => {
@@ -32,13 +22,14 @@ export default function RenderToDo({ arr, updateParent }) {
               p={5}
               _hover={{ cursor: "pointer" }}
               onClick={() => {
-                methods.addNext(task);
-                // reRenderParent();
-                updateParent();
-                update();
+                methods.removeFinishedTask(task);
               }}
             >
-              <Text fontWeight="400" fontSize="lg">
+              <Text
+                fontWeight="400"
+                fontSize="150%"
+                textDecoration="line-through"
+              >
                 {task.task}
               </Text>
               <Box>{`${
@@ -54,8 +45,8 @@ export default function RenderToDo({ arr, updateParent }) {
               _active={{ bg: "none" }}
               onClick={() => {
                 methods.removeTask(task);
-                updateParent();
-                update();
+                // updateParent();
+                // update();
               }}
             >
               <IoIosCloseCircle color="red" size="50" />

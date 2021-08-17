@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Heading,
   Modal,
@@ -11,14 +12,17 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
+import { useEffect } from "react";
 
-export default function FinishedTaskConfirmation(openModal) {
+export default function FinishedTaskConfirmation() {
+  //   useEffect(() => {}, []);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={true} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
