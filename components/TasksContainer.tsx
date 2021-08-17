@@ -6,7 +6,7 @@ import getUsersTasks from "../helpers/getUsersTasks";
 import createMethods, { initState } from "../states/useMethods";
 import HelpModal from "./HelpModal";
 import RenderDone from "./RenderDone";
-import RenderToDo from "./RenderToDo";
+import RenderToDo from "./renderToDo";
 import RenderUpNext from "./UpNext";
 
 export default function TasksContainer() {
