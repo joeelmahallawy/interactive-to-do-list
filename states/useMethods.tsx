@@ -15,7 +15,13 @@ export default function createMethods(state) {
       if (state.inProgress.length == 0) {
         state.todo.splice(state.todo.indexOf(el), 1);
         state.inProgress.push(el);
+      } else {
+        let recentTask = state.inProgress.pop();
+        state.todo.splice(state.todo.indexOf(el), 1);
+        state.inProgress.push(el);
+        state.todo.push(recentTask);
       }
+      console.log(state);
       return state;
     },
     removeTask(el) {

@@ -7,7 +7,6 @@ import createMethods, { initState } from "../states/useMethods";
 export default function RenderDone({ arr }) {
   const [state, methods] = useMethods(createMethods, initState);
   const update = useUpdate();
-  console.log(arr);
   return arr
     ? arr.map((task, i) => {
         return (

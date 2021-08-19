@@ -36,6 +36,7 @@ export default function TasksContainer() {
               fontWeight="300"
               fontFamily="sans-serif"
             >
+              {/* FIXME:FIXME:FIXME:FIXME:FIX RENDERING OF NEXT UP TASKFIXME:FIXME:FIXME:FIXME: */}
               {state.inProgress[0] ? state.inProgress[0].task : ""}
             </Heading>
           </Center>
