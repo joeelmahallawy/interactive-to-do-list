@@ -5,7 +5,9 @@ export const initState = { todo: [], inProgress: [], done: [] };
 export default function createMethods(state) {
   return {
     clearToDo() {
-      return initState;
+      state.todo.splice(0, state.todo.length);
+      state.done.splice(0, state.done.length);
+      return state;
     },
     addToDo(el) {
       state.todo.push(el);
@@ -19,9 +21,9 @@ export default function createMethods(state) {
         let recentTask = state.inProgress.pop();
         state.todo.splice(state.todo.indexOf(el), 1);
         state.inProgress.push(el);
+        // console.log(recentTask);
         state.todo.push(recentTask);
       }
-      console.log(state);
       return state;
     },
     removeTask(el) {
@@ -56,6 +58,11 @@ export default function createMethods(state) {
     },
     removeFinishedTask(el) {
       state.done.splice(state.done.indexOf(el), 1);
+      return state;
+    },
+    finishTask(el) {
+      let lastTask = state.inProgress.pop();
+      state.done.push(lastTask);
       return state;
     },
   };

@@ -22,21 +22,20 @@ export default function TasksContainer() {
         <Flex mb={2}>
           <Center>
             {showInProgress ? (
-              <Heading color="teal.700" fontSize="250%">
+              <Heading color="teal.700" fontSize="200%">
                 In Progress:
               </Heading>
             ) : (
-              <Heading color="teal.700" fontSize="250%">
+              <Heading color="teal.700" fontSize="200%">
                 Next up:
               </Heading>
             )}
             <Heading
               mt="auto"
-              fontSize="225%"
+              fontSize="200%"
               fontWeight="300"
               fontFamily="sans-serif"
             >
-              {/* FIXME:FIXME:FIXME:FIXME:FIX RENDERING OF NEXT UP TASKFIXME:FIXME:FIXME:FIXME: */}
               {state.inProgress[0] ? state.inProgress[0].task : ""}
             </Heading>
           </Center>
@@ -95,9 +94,22 @@ export default function TasksContainer() {
           <HelpModal />
         </Flex>
         <Box mt={5}>
-          <Heading p={4} border="0.5px solid lightgray">
-            To do List
-          </Heading>
+          <Flex
+            justifyContent="space-between"
+            border="0.5px solid lightgray"
+            p={3}
+          >
+            <Heading>To do List</Heading>
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                methods.clearToDo();
+                updateSelf();
+              }}
+            >
+              Clear
+            </Button>
+          </Flex>
           <RenderToDo arr={state.todo} updateParent={updateSelf} />
           <RenderDone arr={state.done} />
         </Box>

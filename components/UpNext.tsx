@@ -1,4 +1,19 @@
-import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Countdown from "react-countdown";
@@ -9,10 +24,9 @@ import getTimeFormat from "../helpers/getTimeFormat";
 import getTotalTime from "../helpers/getTotalTime";
 import createMethods, { initState } from "../states/useMethods";
 import startResumePauseBtn from "./startResumePauseBtn";
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
 
 export default function RenderUpNext({ arr, func, update }) {
-  const updateMe = useUpdate();
-  const [StopTime, setStopTime] = useState(false);
   const [showButton, setshowButton] = useState("Start");
   const [state, methods] = useMethods(createMethods, initState);
   const [showTotalTime, setShowTotalTime] = useState(true);
@@ -24,6 +38,7 @@ export default function RenderUpNext({ arr, func, update }) {
     1000
   );
   const seconds = timeLeft / 1000;
+  console.log(seconds);
 
   if (seconds == 1) {
     reset();
@@ -34,15 +49,14 @@ export default function RenderUpNext({ arr, func, update }) {
       update();
       setshowButton("Start");
     }
-    // moveToNextTask ? methods.doNextTask() : reset();
   }
 
   return arr.map((next, i) => {
     return (
       <Flex alignItems="center" key={i}>
-        <Box w="85%">
+        <Box w="80%">
           <Heading
-            fontSize="200%"
+            fontSize="175%"
             fontWeight="400"
             justifyContent="right"
             mb={1}
@@ -55,13 +69,14 @@ export default function RenderUpNext({ arr, func, update }) {
                 (timeLeft / 1000 / 60) % 60,
                 timeLeft
               )}
+              {console.log(state)}
             </Flex>
           </Heading>
 
           <Flex
             border="1px solid gray"
             borderRadius="10px"
-            h="60px"
+            h="40px"
             w={`${
               timeLeft / initialTime ? (timeLeft / initialTime) * 100 : 100
             }%`}
@@ -82,33 +97,66 @@ export default function RenderUpNext({ arr, func, update }) {
           <Heading fontWeight="500" ml="auto" fontSize="100%">
             {getTotalTime(state, timeLeft)}
           </Heading>
-          {showButton == "Start"
-            ? startResumePauseBtn(
-                "Pause",
-                setshowButton,
-                start,
-                "Start",
-                "messenger",
-                setShowTotalTime,
-                func,
-                initialTime
-              )
-            : showButton == "Pause"
-            ? startResumePauseBtn(
-                "Resume",
-                setshowButton,
-                pause,
-                "Pause",
-                "red"
-              )
-            : startResumePauseBtn(
-                "Pause",
-                setshowButton,
-                resume,
-                "Resume",
-                "teal"
-              )}
+          <Flex>
+            {showButton == "Start"
+              ? startResumePauseBtn(
+                  "Pause",
+                  setshowButton,
+                  start,
+                  "Start",
+                  "messenger",
+                  setShowTotalTime,
+                  func,
+                  initialTime
+                )
+              : showButton == "Pause"
+              ? startResumePauseBtn(
+                  "Resume",
+                  setshowButton,
+                  pause,
+                  "Pause",
+                  "red"
+                )
+              : startResumePauseBtn(
+                  "Pause",
+                  setshowButton,
+                  resume,
+                  "Resume",
+                  "teal"
+                )}
+          </Flex>
         </Flex>
+        <Center mt="auto">
+          <Popover trigger="hover">
+            <PopoverTrigger>
+              <Button
+                size="md"
+                bg="none"
+                _hover={{ bg: "none" }}
+                _active={{ bg: "none" }}
+                _focus={{ outline: "none" }}
+                onClick={() => {
+                  methods.finishTask();
+                  reset();
+                  setshowButton("Start");
+                  update();
+                }}
+              >
+                <IoCheckmarkCircleSharp size="35px" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+
+              <PopoverBody>
+                {" "}
+                <Heading fontSize="md" textAlign="center" fontWeight="500">
+                  Mark task as done
+                </Heading>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        </Center>
       </Flex>
     );
   });

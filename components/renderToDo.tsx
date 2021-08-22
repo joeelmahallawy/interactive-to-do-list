@@ -29,19 +29,19 @@ export default function RenderToDo({ arr, updateParent }) {
               mt={3}
               mb={3}
               justifyContent="space-between"
-              p={5}
+              p={4}
               _hover={{ cursor: "pointer" }}
               onClick={() => {
                 methods.addNext(task);
                 // reRenderParent();
                 updateParent();
-                update();
+                // update();
               }}
             >
               <Text fontWeight="400" fontSize="150%">
                 {task.task}
               </Text>
-              <Center fontSize="125%">{`${
+              <Center fontSize="100%">{`${
                 Number(task.time.slice(0, 2)) < 10
                   ? task.time.slice(1, 2)
                   : task.time.slice(0, 2)

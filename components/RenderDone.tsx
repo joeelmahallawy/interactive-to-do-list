@@ -20,11 +20,8 @@ export default function RenderDone({ arr }) {
               mt={3}
               mb={3}
               justifyContent="space-between"
-              p={5}
+              p={4}
               _hover={{ cursor: "pointer" }}
-              onClick={() => {
-                methods.removeFinishedTask(task);
-              }}
             >
               <Text
                 fontWeight="400"
@@ -33,7 +30,7 @@ export default function RenderDone({ arr }) {
               >
                 {task.task}
               </Text>
-              <Center fontSize="125%">{`${
+              <Center fontSize="100%">{`${
                 Number(task.time.slice(0, 2)) < 10
                   ? task.time.slice(1, 2)
                   : task.time.slice(0, 2)
@@ -46,7 +43,6 @@ export default function RenderDone({ arr }) {
               _active={{ bg: "none" }}
               onClick={() => {
                 methods.removeFinishedTask(task);
-                console.log(state);
                 update();
               }}
             >
