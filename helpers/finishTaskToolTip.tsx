@@ -12,9 +12,7 @@ import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { useMethods } from "react-use";
 import createMethods, { initState } from "../states/useMethods";
 
-export default function finishTaskToolTip(fn1, setShowBtn, fn2) {
-  const [state, methods] = useMethods(createMethods, initState);
-
+export default function finishTaskToolTip(rest, methods, setShowBtn, fn) {
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
@@ -25,11 +23,10 @@ export default function finishTaskToolTip(fn1, setShowBtn, fn2) {
           _active={{ bg: "none" }}
           _focus={{ outline: "none" }}
           onClick={() => {
-            // fn1();
-            methods.finishTask();
-            fn1();
+            methods();
+            rest();
             setShowBtn("Start");
-            fn2();
+            fn();
           }}
         >
           <IoCheckmarkCircleSharp size="30px" />

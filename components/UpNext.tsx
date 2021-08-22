@@ -136,7 +136,7 @@ export default function RenderUpNext({ arr, func, update }) {
         </Flex>
         <Center mt="auto">
           {resetTimerToolTip(setshowButton, reset)}
-          {finishTaskToolTip(reset(), setshowButton, update())}
+          {finishTaskToolTip(reset, methods.finishTask, setshowButton, update)}
         </Center>
       </Flex>
     );
