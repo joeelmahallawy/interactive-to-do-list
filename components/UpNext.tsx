@@ -24,7 +24,9 @@ import getTimeFormat from "../helpers/getTimeFormat";
 import getTotalTime from "../helpers/getTotalTime";
 import createMethods, { initState } from "../states/useMethods";
 import startResumePauseBtn from "./startResumePauseBtn";
-import { IoCheckmarkCircleSharp } from "react-icons/io5";
+import { IoCheckmarkCircleSharp, IoReloadCircleOutline } from "react-icons/io5";
+import resetTimerToolTip from "../helpers/resetTimerToolTip";
+import finishTaskToolTip from "../helpers/finishTaskToolTip";
 
 export default function RenderUpNext({ arr, func, update }) {
   const [showButton, setshowButton] = useState("Start");
@@ -93,11 +95,17 @@ export default function RenderUpNext({ arr, func, update }) {
             _hover={{ cursor: "pointer" }}
           />
         </Box>
-        <Flex ml="auto" flexDir="column" mt={3}>
-          <Heading fontWeight="500" ml="auto" fontSize="100%">
+        <Flex flexDir="column" mr="-5" mt="auto" w="15%">
+          <Heading
+            fontWeight="500"
+            textAlign="center"
+            w="100%"
+            ml="auto"
+            fontSize="100%"
+          >
             {getTotalTime(state, timeLeft)}
           </Heading>
-          <Flex>
+          <Center>
             {showButton == "Start"
               ? startResumePauseBtn(
                   "Pause",
@@ -124,38 +132,11 @@ export default function RenderUpNext({ arr, func, update }) {
                   "Resume",
                   "teal"
                 )}
-          </Flex>
+          </Center>
         </Flex>
         <Center mt="auto">
-          <Popover trigger="hover">
-            <PopoverTrigger>
-              <Button
-                size="md"
-                bg="none"
-                _hover={{ bg: "none" }}
-                _active={{ bg: "none" }}
-                _focus={{ outline: "none" }}
-                onClick={() => {
-                  methods.finishTask();
-                  reset();
-                  setshowButton("Start");
-                  update();
-                }}
-              >
-                <IoCheckmarkCircleSharp size="35px" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <PopoverArrow />
-
-              <PopoverBody>
-                {" "}
-                <Heading fontSize="md" textAlign="center" fontWeight="500">
-                  Mark task as done
-                </Heading>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
+          {resetTimerToolTip(setshowButton, reset)}
+          {finishTaskToolTip(reset(), setshowButton, update())}
         </Center>
       </Flex>
     );
