@@ -27,6 +27,7 @@ import startResumePauseBtn from "./startResumePauseBtn";
 import { IoCheckmarkCircleSharp, IoReloadCircleOutline } from "react-icons/io5";
 import resetTimerToolTip from "../helpers/resetTimerToolTip";
 import finishTaskToolTip from "../helpers/finishTaskToolTip";
+import useSound from "use-sound";
 
 export default function RenderUpNext({ arr, func, update }) {
   const [showButton, setshowButton] = useState("Start");
@@ -39,12 +40,14 @@ export default function RenderUpNext({ arr, func, update }) {
     initialTime,
     1000
   );
+  const [playActive] = useSound("../public/alarm.mp3", { volume: 0.25 });
   const seconds = timeLeft / 1000;
   console.log(seconds);
 
-  if (seconds == 1) {
+  if (seconds == 55) {
     reset();
     setshowButton("Start");
+    // FIXME:FIXME:FIXME:SOUND EFFECT
     const moveToNextTask = window.confirm("Move on to next task?");
     if (moveToNextTask == true) {
       methods.doNextTask();
@@ -133,6 +136,7 @@ export default function RenderUpNext({ arr, func, update }) {
                   "teal"
                 )}
           </Center>
+          <Button>hi</Button>
         </Flex>
         <Center mt="auto">
           {resetTimerToolTip(setshowButton, reset)}

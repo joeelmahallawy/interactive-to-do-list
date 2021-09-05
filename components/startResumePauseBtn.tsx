@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import React from "react";
+import useSound from "use-sound";
 
 export default function startResumePauseBtn(
   setTo,
