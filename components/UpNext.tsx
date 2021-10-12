@@ -14,6 +14,7 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
+
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Countdown from "react-countdown";
@@ -24,10 +25,16 @@ import getTimeFormat from "../helpers/getTimeFormat";
 import getTotalTime from "../helpers/getTotalTime";
 import createMethods, { initState } from "../states/useMethods";
 import startResumePauseBtn from "./startResumePauseBtn";
-import { IoCheckmarkCircleSharp, IoReloadCircleOutline } from "react-icons/io5";
+import {
+  IoAlarm,
+  IoCheckmarkCircleSharp,
+  IoReloadCircleOutline,
+} from "react-icons/io5";
 import resetTimerToolTip from "../helpers/resetTimerToolTip";
 import finishTaskToolTip from "../helpers/finishTaskToolTip";
 import useSound from "use-sound";
+import ReactAudioPlayer from "react-audio-player";
+// import AlarmSound from "./alarm.mp3";
 
 export default function RenderUpNext({ arr, func, update }) {
   const [showButton, setshowButton] = useState("Start");
@@ -40,14 +47,29 @@ export default function RenderUpNext({ arr, func, update }) {
     initialTime,
     1000
   );
-  const [playActive] = useSound("../public/alarm.mp3", { volume: 0.25 });
+  const [audio] = useState(
+    typeof Audio !== "undefined" && new Audio("alarm.mp3")
+  );
+
+  // audio.play();
+
+  // console.log("audio tingz:", audio);
+
+  // const [playActive] = useSound(
+  //   "../sounds/alarm.mp3"
+  //   // { volume: 0.25 }
+  // );
+  // TODO:
+
   const seconds = timeLeft / 1000;
-  console.log(seconds);
 
   if (seconds == 55) {
     reset();
     setshowButton("Start");
-    // FIXME:FIXME:FIXME:SOUND EFFECT
+    // TODO: SOUND EFFECT
+    // audio.play();
+
+    // TODO:
     const moveToNextTask = window.confirm("Move on to next task?");
     if (moveToNextTask == true) {
       methods.doNextTask();
@@ -59,6 +81,16 @@ export default function RenderUpNext({ arr, func, update }) {
   return arr.map((next, i) => {
     return (
       <Flex alignItems="center" key={i}>
+        {/* <ReactAudioPlayer src="../public/alarm.mp3" autoPlay controls /> */}
+        <Button
+          onClick={() => {
+            audio.setAttribute("src", "alarm.mp3");
+            audio.play();
+          }}
+        >
+          {" "}
+          Play sound
+        </Button>
         <Box w="80%">
           <Heading
             fontSize="175%"
@@ -136,7 +168,6 @@ export default function RenderUpNext({ arr, func, update }) {
                   "teal"
                 )}
           </Center>
-          <Button>hi</Button>
         </Flex>
         <Center mt="auto">
           {resetTimerToolTip(setshowButton, reset)}
