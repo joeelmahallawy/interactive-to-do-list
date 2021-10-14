@@ -15,7 +15,7 @@ export default function TasksContainer() {
   const updateSelf = useUpdate();
   const time = useRef();
   const [showInProgress, setShowInProgress] = useState(false);
-  // const [updateMoi, setUpdateMoi] = useState(false)
+  const [updateMoi, setUpdateMoi] = useState(false);
   return (
     <>
       <Box borderBottom="1px solid gray" p={2}>
